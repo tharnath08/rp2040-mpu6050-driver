@@ -47,7 +47,10 @@
         "*.tcc": "cpp",
         "cstdint": "cpp",
         "random": "cpp",
-        "rp2040_config.h": "c"
+        "rp2040_config.h": "c",
+        "stdlib.h": "c",
+        "i2c.h": "c",
+        "mpu6050.h": "c"
     },
     "python.autoComplete.extraPaths": [
         "/home/tharnath/build/alphabot_description",

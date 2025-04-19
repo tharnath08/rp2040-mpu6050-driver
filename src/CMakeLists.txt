@@ -1,6 +1,7 @@
 # This is the main binary. List your C files here.
 add_executable(main
     main.c
+    mpu6050.c
     )
 
 pico_set_program_name(main "test")
@@ -15,6 +16,7 @@ pico_enable_stdio_usb(main 0)
 target_link_libraries(main PRIVATE
   pico_stdlib
   pico_multicore
+  hardware_i2c
   pico_async_context_freertos
   FreeRTOS-Kernel-Heap4
 )

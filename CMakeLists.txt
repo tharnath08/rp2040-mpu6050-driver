@@ -40,7 +40,7 @@ include(${PICO_SDK_PATH}/pico_sdk_init.cmake)
 include(${FREERTOS_PATH}/portable/ThirdParty/GCC/RP2040/FreeRTOS_Kernel_import.cmake)
 
 # This defines your project name, you can name it anything you want.
-project(myproject C CXX ASM)
+project(MPU6050 C CXX ASM)
 
 # These are some macros from the pico SDK that do some setup.
 pico_sdk_init()

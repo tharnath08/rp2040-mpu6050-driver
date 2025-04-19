@@ -1,0 +1,14 @@
+#ifndef MPU6050_REG_H
+#define MPU6050_REG_H
+
+
+#define MPU6050_I2C_PORT i2c1
+#define MPU6050_I2C_SDA 14
+#define MPU6050_I2C_SCL 15
+
+#define MPU6050_ADDRESS 0x69
+
+#define MPU6050_WHO_AM_I_REG 0x75
+
+
+#endif

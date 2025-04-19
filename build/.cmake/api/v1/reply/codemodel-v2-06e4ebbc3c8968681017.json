@@ -1202,7 +1202,7 @@
 						0,
 						95
 					],
-					"name" : "myproject",
+					"name" : "MPU6050",
 					"targetIndexes" : 
 					[
 						4,
@@ -1358,14 +1358,14 @@
 				{
 					"directoryIndex" : 95,
 					"id" : "flash::@145eef247bfb46b6828c",
-					"jsonFile" : "target-flash-Debug-73a5c8f25081ce6d69a2.json",
+					"jsonFile" : "target-flash-Debug-531f0468e61ce2a573d4.json",
 					"name" : "flash",
 					"projectIndex" : 0
 				},
 				{
 					"directoryIndex" : 95,
 					"id" : "main::@145eef247bfb46b6828c",
-					"jsonFile" : "target-main-Debug-20a2b47c1ff3250f4a38.json",
+					"jsonFile" : "target-main-Debug-ad9f6beb3868402d90a5.json",
 					"name" : "main",
 					"projectIndex" : 0
 				}
