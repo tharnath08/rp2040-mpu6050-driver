@@ -59,6 +59,7 @@ mpu6050_hal_status mpu6050_get_chip_id(uint8_t* buffer){
 mpu6050_hal_status mpu6050_read_temp(float* temp){
     uint8_t reg[] = {TEMP_OUT_H};
     uint8_t buffer[2];
+    int16_t temp_buff;
     if(i2c_write_blocking(MPU6050_I2C_PORT, MPU6050_ADDRESS, reg,1,true) <= 0){
         return MPU6050_STATUS_FAILED;
     }
@@ -66,19 +67,20 @@ mpu6050_hal_status mpu6050_read_temp(float* temp){
         return MPU6050_STATUS_FAILED;
     }
 
-    *temp = buffer[0] << 8 | buffer[1];
+    temp_buff = buffer[0] << 8 | buffer[1];
 
-    *temp = ((*temp) / 340)+36.53;
+    *temp = (temp_buff / 340)+36.53;
 
     return MPU6050_STATUS_OK;
 }
 
 
 
-mpu6050_hal_status mpu6050_read_accel(int16_t accel[3]){
+mpu6050_hal_status mpu6050_read_accel(float accel[3]){
 
     uint8_t buffer[6];
     uint8_t reg[] = {ACCEL_XOUT_H};
+    int16_t raw;
 
     if(i2c_write_blocking(MPU6050_I2C_PORT, MPU6050_ADDRESS, reg,1,true) <= 0){
         return MPU6050_STATUS_FAILED;
@@ -88,7 +90,8 @@ mpu6050_hal_status mpu6050_read_accel(int16_t accel[3]){
     }
 
     for(int i=0; i<3; i++){
-        accel[i] = buffer[i*2]<<8 | buffer[(i*2)+1];
+        raw = buffer[i*2]<<8 | buffer[(i*2)+1];
+        accel[i] = raw / 16384.0f;
     }
 
     return MPU6050_STATUS_OK;
@@ -96,10 +99,38 @@ mpu6050_hal_status mpu6050_read_accel(int16_t accel[3]){
 
 
 
-mpu6050_hal_status mpu6050_print_accel_in_g(int16_t accel[3]){
-    printf("Accel x: %f \t ", accel[0]/16384.0f);
-    printf("y: %f \t ", accel[1]/16384.0f);
-    printf("z: %f \n ", accel[2]/16384.0f);
+mpu6050_hal_status mpu6050_read_gyro(float gyro[3]){
+    uint8_t buffer[6];
+    uint8_t reg[] = {GYRO_XOUT_H};
+    int16_t raw;
+
+    if(i2c_write_blocking(MPU6050_I2C_PORT, MPU6050_ADDRESS, reg, 1, true) <= 0){
+        return MPU6050_STATUS_FAILED;
+    }
+
+    if(i2c_read_blocking(MPU6050_I2C_PORT, MPU6050_ADDRESS, buffer, 6, false) <=0){
+        return MPU6050_STATUS_FAILED;
+    }
+
+    for(int i=0; i<3; i++){
+        raw = buffer[i*2]<<8 | buffer[(i*2)+1];
+        gyro[i] = raw / 131.0f;
+    }
+    return MPU6050_STATUS_OK;
+ }
+
+
+
+mpu6050_hal_status mpu6050_print_accel_in_g(float accel[3]){
+    printf("Accel x: %f \t ", accel[0]);
+    printf("y: %f \t ", accel[1]);
+    printf("z: %f \n ", accel[2]);
     return MPU6050_STATUS_OK;
 }
 
+mpu6050_hal_status mpu6050_print_angular_velocity(float gyro[3]){
+    printf("Gyro x: %f \t ", gyro[0]);
+    printf("y: %f \t ", gyro[1]);
+    printf("z: %f \n ", gyro[2]);
+    return MPU6050_STATUS_OK;
+}

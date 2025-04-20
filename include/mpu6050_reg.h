@@ -7,11 +7,15 @@
 #define MPU6050_I2C_SCL 15
 
 #define MPU6050_ADDRESS 0x69
+#define MPU6050_CHIP_ID 0x68
 
 #define MPU6050_WHO_AM_I_REG 0x75
 #define MPU6050_PWR_MGMT_1_REG 0x6B
+
 #define TEMP_OUT_H 0x41
 #define ACCEL_XOUT_H 0x3b
+#define GYRO_XOUT_H 0x43
+
 
 
 #endif
