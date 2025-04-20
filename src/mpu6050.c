@@ -21,7 +21,7 @@ mpu6050_hal_status mpu6050_init(){
     i2c_init(MPU6050_I2C_PORT, 100*1000 );
 
     gpio_pull_up(MPU6050_I2C_SDA);
-    gpio_pull_up(MPU6050_I2C_SDA);
+    gpio_pull_up(MPU6050_I2C_SCL);
 
     mpu6050_reset();
 
