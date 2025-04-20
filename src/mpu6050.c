@@ -76,11 +76,12 @@ mpu6050_hal_status mpu6050_read_temp(float* temp){
 
 
 
-mpu6050_hal_status mpu6050_read_accel(float accel[3]){
+mpu6050_hal_status mpu6050_read_accel(mpu6050_accel_gyro_data* accel){
 
     uint8_t buffer[6];
     uint8_t reg[] = {ACCEL_XOUT_H};
     int16_t raw;
+    float* values = (float*)accel;
 
     if(i2c_write_blocking(MPU6050_I2C_PORT, MPU6050_ADDRESS, reg,1,true) <= 0){
         return MPU6050_STATUS_FAILED;
@@ -91,7 +92,7 @@ mpu6050_hal_status mpu6050_read_accel(float accel[3]){
 
     for(int i=0; i<3; i++){
         raw = buffer[i*2]<<8 | buffer[(i*2)+1];
-        accel[i] = raw / 16384.0f;
+        values[i] = raw / 16384.0f;
     }
 
     return MPU6050_STATUS_OK;
@@ -99,10 +100,11 @@ mpu6050_hal_status mpu6050_read_accel(float accel[3]){
 
 
 
-mpu6050_hal_status mpu6050_read_gyro(float gyro[3]){
+mpu6050_hal_status mpu6050_read_gyro(mpu6050_accel_gyro_data* gyro){
     uint8_t buffer[6];
     uint8_t reg[] = {GYRO_XOUT_H};
     int16_t raw;
+    float* values = (float*)gyro;
 
     if(i2c_write_blocking(MPU6050_I2C_PORT, MPU6050_ADDRESS, reg, 1, true) <= 0){
         return MPU6050_STATUS_FAILED;
@@ -114,23 +116,23 @@ mpu6050_hal_status mpu6050_read_gyro(float gyro[3]){
 
     for(int i=0; i<3; i++){
         raw = buffer[i*2]<<8 | buffer[(i*2)+1];
-        gyro[i] = raw / 131.0f;
+        values[i] = raw / 131.0f;
     }
     return MPU6050_STATUS_OK;
  }
 
 
 
-mpu6050_hal_status mpu6050_print_accel_in_g(float accel[3]){
-    printf("Accel x: %f \t ", accel[0]);
-    printf("y: %f \t ", accel[1]);
-    printf("z: %f \n ", accel[2]);
+mpu6050_hal_status mpu6050_print_accel_in_g(mpu6050_accel_gyro_data accel){
+    printf("Accel x: %f \t ", accel.x);
+    printf("y: %f \t ", accel.y);
+    printf("z: %f \n ", accel.z);
     return MPU6050_STATUS_OK;
 }
 
-mpu6050_hal_status mpu6050_print_angular_velocity(float gyro[3]){
-    printf("Gyro x: %f \t ", gyro[0]);
-    printf("y: %f \t ", gyro[1]);
-    printf("z: %f \n ", gyro[2]);
+mpu6050_hal_status mpu6050_print_angular_velocity(mpu6050_accel_gyro_data gyro){
+    printf("Gyro x: %f \t ", gyro.x);
+    printf("y: %f \t ", gyro.y);
+    printf("z: %f \n ", gyro.z);
     return MPU6050_STATUS_OK;
 }

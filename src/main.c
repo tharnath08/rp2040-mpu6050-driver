@@ -6,19 +6,18 @@
 int main() {
     stdio_init_all();
     mpu6050_init();
-    uint8_t chipId = 0;
-    float temp = 0;
-    float accel[3], gyro[3];
+    
+    mpu6050_data_buff* mpu6050 = malloc(sizeof(mpu6050_data_buff));
     while (true) {
-        mpu6050_get_chip_id(&chipId);
-        mpu6050_read_temp(&temp);
-        printf("MPU6050 Chip ID: 0x%x \t Temp: %f c\n",chipId,temp);
+        // mpu6050_get_chip_id(&mpu6050->chip_id);
+        // mpu6050_read_temp(&mpu6050->temp);
+        // printf("MPU6050 Chip ID: 0x%x \t Temp: %f c\n",mpu6050->chip_id,mpu6050->temp);
 
-        mpu6050_read_accel(accel);
-        mpu6050_print_accel_in_g(accel);
+        mpu6050_read_accel(&mpu6050->accel);
+        mpu6050_print_accel_in_g(mpu6050->accel);
         
-        mpu6050_read_gyro(gyro);
-        mpu6050_print_angular_velocity(gyro);
+        // mpu6050_read_gyro(&mpu6050->gyro);
+        // mpu6050_print_angular_velocity(mpu6050->gyro);
 
         // sleep_ms(1000);
     }
